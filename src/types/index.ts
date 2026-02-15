@@ -1,0 +1,58 @@
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  longDescription?: string;
+  image?: string;
+  techStack: string[];
+  liveUrl?: string;
+  githubUrl?: string;
+  featured?: boolean;
+}
+
+export interface Skill {
+  name: string;
+  category: SkillCategory;
+  icon?: string;
+}
+
+export type SkillCategory =
+  | 'Frontend'
+  | 'Backend'
+  | 'DevOps'
+  | 'Tools'
+  | 'Languages'
+  | 'Databases';
+
+export interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  startDate: string;
+  endDate: string;
+  description: string[];
+  techStack?: string[];
+}
+
+export interface Education {
+  id: string;
+  institution: string;
+  degree: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+  description?: string;
+}
+
+export interface SocialLink {
+  name: string;
+  url: string;
+  icon: string;
+}
+
+export interface NavItem {
+  label: string;
+  path: string;
+}
+
+export type Theme = 'light' | 'dark';
