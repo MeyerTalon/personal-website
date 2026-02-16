@@ -33,7 +33,7 @@ export const projects: Project[] = [
     title: 'geo-dash-rl',
     description:
       'reinforcement learning and automation for geometry dash. uses tesseract ocr for on-screen state and a custom built RL model for decision-making. [in progress]',
-    techStack: ['Python', 'Jupyter'],
+    techStack: ['Python', 'PyTorch', 'Jupyter'],
     githubUrl: 'https://github.com/MeyerTalon/geo-dash-rl',
     featured: false,
   },

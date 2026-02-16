@@ -10,7 +10,7 @@ const contactInfo = [
     icon: Mail,
     label: 'email',
     value: 'talon_meyer@berkeley.edu',
-    href: 'mailto:your.email@example.com',
+    href: 'mailto:talon_meyer@berkeley.edu',
   },
   {
     icon: MapPin,
@@ -42,14 +42,35 @@ export function Contact() {
     subject: '',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    setTimeout(() => setSubmitted(false), 5000);
+    setStatus('sending');
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setStatus('error');
+        setErrorMessage(typeof data.error === 'string' ? data.error : 'something went wrong. try again.');
+        return;
+      }
+
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch {
+      setStatus('error');
+      setErrorMessage('network error. try again.');
+    }
   }
 
   return (
@@ -143,9 +164,14 @@ export function Contact() {
           <div className="lg:col-span-3">
             <ScrollReveal animation="slide-in-right">
               <Card hover={false}>
-                {submitted && (
+                {status === 'success' && (
                   <div className="mb-6 rounded-lg border border-white/20 p-4 text-sm text-white/80">
                     thanks for your message. i'll get back to you soon.
+                  </div>
+                )}
+                {status === 'error' && (
+                  <div className="mb-6 rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+                    {errorMessage}
                   </div>
                 )}
 
@@ -223,16 +249,17 @@ export function Contact() {
                       className="w-full resize-none rounded-lg border border-white/20 bg-white/5 px-4 py-2.5
                         text-sm text-white placeholder-white/40 transition-colors
                         focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
-                      placeholder="tell me about your project or idea..."
+                      placeholder="tell me something..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                    disabled={status === 'sending'}
+                    className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none"
                   >
                     <Send size={16} />
-                    send
+                    {status === 'sending' ? 'sending...' : 'send'}
                   </button>
                 </form>
               </Card>
