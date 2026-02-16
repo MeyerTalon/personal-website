@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
 import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
 import { ParticleNetwork } from '../components/ParticleNetwork';
 import { TransformerActivation } from '../components/TransformerActivation';
@@ -30,7 +29,7 @@ export function Landing() {
         <div className="relative z-10 mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <h1
-              className={`bg-gradient-to-b from-white to-white/70 bg-clip-text text-4xl font-semibold tracking-tight text-transparent transition-all duration-700 sm:text-5xl lg:text-6xl ${
+              className={`bg-gradient-to-b from-white to-white/70 bg-clip-text text-4xl font-semibold tracking-tight text-transparent leading-[1.1] transition-all duration-700 sm:text-5xl lg:text-6xl ${
                 showContent ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
               }`}
             >
@@ -92,10 +91,6 @@ export function Landing() {
               </a>
             </div>
           </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-gentle-bounce">
-          <ChevronDown size={18} className="text-white/30" />
         </div>
       </section>
 
