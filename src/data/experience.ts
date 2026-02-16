@@ -1,4 +1,4 @@
-import type { Experience, Education } from '../types';
+import type { Experience, Education } from '../types/index';
 
 export const experiences: Experience[] = [
   {

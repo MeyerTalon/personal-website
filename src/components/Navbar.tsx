@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, FileText } from 'lucide-react';
 import { cn } from '../utils/cn';
-import type { NavItem } from '../types';
+import type { NavItem } from '../types/index';
 
 const navItems: NavItem[] = [
   { label: 'home', path: '/' },
   { label: 'about', path: '/about' },
+  { label: 'blog', path: '/blog' },
   { label: 'projects', path: '/projects' },
   { label: 'contact', path: '/contact' },
 ];
@@ -25,14 +26,16 @@ export function Navbar() {
       >
         <Link
           to="/"
-          className="font-mono text-sm font-medium text-white transition-colors hover:text-accent"
+          className="font-mono text-base font-medium text-white transition-colors hover:text-accent"
         >
           tm<span className="text-accent">.</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => {
-            const active = location.pathname === item.path;
+            const active =
+              location.pathname === item.path ||
+              (item.path === '/blog' && location.pathname.startsWith('/blog'));
             return (
               <Link
                 key={item.path}
@@ -91,7 +94,8 @@ export function Navbar() {
               onClick={() => setIsOpen(false)}
               className={cn(
                 'block rounded px-3 py-2 font-mono text-xs font-medium transition-colors',
-                location.pathname === item.path
+                location.pathname === item.path ||
+                  (item.path === '/blog' && location.pathname.startsWith('/blog'))
                   ? 'text-accent'
                   : 'text-white/50 hover:text-white'
               )}

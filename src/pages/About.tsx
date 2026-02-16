@@ -5,7 +5,7 @@ import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
 import { skills, skillCategories } from '../data/skills';
 import { experiences, research, leadership, education } from '../data/experience';
-import type { Experience } from '../types';
+import type { Experience } from '../types/index';
 
 function Timeline({
   items,

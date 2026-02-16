@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { Theme } from '../types';
+import type { Theme } from '../types/index';
 
 export interface ThemeContextType {
   theme: Theme;

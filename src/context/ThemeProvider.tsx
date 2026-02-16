@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
-import type { Theme } from '../types';
+import type { Theme } from '../types/index';
 import { ThemeContext } from './ThemeContext';
 
 function getInitialTheme(): Theme {

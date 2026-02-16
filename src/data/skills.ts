@@ -1,4 +1,4 @@
-import type { Skill } from '../types';
+import type { Skill } from '../types/index';
 
 export const skills: Skill[] = [
   // ML / AI
@@ -9,6 +9,9 @@ export const skills: Skill[] = [
   { name: 'YOLOv8', category: 'ML / AI' },
   { name: 'Computer Vision', category: 'ML / AI' },
   { name: 'LLMs / NLP', category: 'ML / AI' },
+  { name: 'RL', category: 'ML / AI' },
+  { name: 'RLHF', category: 'ML / AI' },
+  { name: 'Lora Fine-Tuning', category: 'ML / AI' },
 
   // Languages
   { name: 'Python', category: 'Languages' },
@@ -39,6 +42,7 @@ export const skills: Skill[] = [
   { name: 'PostgreSQL', category: 'Infrastructure' },
   { name: 'Git', category: 'Infrastructure' },
   { name: 'Vercel', category: 'Infrastructure' },
+  { name: 'Supabase', category: 'Infrastructure' },
 ];
 
 export const skillCategories = [
