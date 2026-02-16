@@ -86,9 +86,10 @@ export function About() {
               i'm a machine learning engineer and full-stack developer studying
               electrical engineering and computer science at uc berkeley. my work
               spans building production ml pipelines, training computer vision
-              models, and shipping full-stack applications — from llm-powered
+              models, and shipping full-stack applications. from llm-powered
               automation at rippling to real-time methane detection research at
-              berkeley's b.e.s.t. lab.
+              berkeley's b.e.s.t. lab, my work is all about building intelligent, 
+              production-grade systems.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-white/60">
               as president of generative ai at berkeley, i lead the largest
