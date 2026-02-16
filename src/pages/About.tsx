@@ -175,37 +175,39 @@ export function About() {
             <SectionHeading title="education." />
           </ScrollReveal>
 
-          <div className="mx-auto max-w-3xl space-y-6">
-            {education.map((edu, index) => (
-              <ScrollReveal key={edu.id} delay={index * 150}>
-                <div className="relative pl-12 sm:pl-14">
-                  <div className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black sm:h-11 sm:w-11">
-                    <GraduationCap size={16} className="text-white/70" />
-                  </div>
-
-                  <Card hover={false}>
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div>
-                        <h3 className="text-lg font-medium text-white">
-                          {edu.degree} in {edu.field}
-                        </h3>
-                        <p className="text-sm font-medium text-white/60">
-                          {edu.institution}
-                        </p>
-                      </div>
-                      <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/60">
-                        {edu.startDate} — {edu.endDate}
-                      </span>
+          <div className="mx-auto max-w-3xl">
+            <div className="relative space-y-6 before:absolute before:left-[17px] before:top-2 before:h-[calc(100%-16px)] before:w-px before:bg-white/20 sm:before:left-[21px]">
+              {education.map((edu, index) => (
+                <ScrollReveal key={edu.id} delay={index * 150}>
+                  <div className="relative pl-12 sm:pl-14">
+                    <div className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black sm:h-11 sm:w-11">
+                      <GraduationCap size={16} className="text-white/70" />
                     </div>
-                    {edu.description && (
-                      <p className="mt-3 text-sm text-white/60">
-                        {edu.description}
-                      </p>
-                    )}
-                  </Card>
-                </div>
-              </ScrollReveal>
-            ))}
+
+                    <Card hover={false}>
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <h3 className="text-lg font-medium text-white">
+                            {edu.degree} in {edu.field}
+                          </h3>
+                          <p className="text-sm font-medium text-white/60">
+                            {edu.institution}
+                          </p>
+                        </div>
+                        <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/60">
+                          {edu.startDate} — {edu.endDate}
+                        </span>
+                      </div>
+                      {edu.description && (
+                        <p className="mt-3 text-sm text-white/60">
+                          {edu.description}
+                        </p>
+                      )}
+                    </Card>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>

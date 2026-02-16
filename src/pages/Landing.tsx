@@ -1,95 +1,79 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons';
-import { ParticleNetwork } from '../components/ParticleNetwork';
-import { TransformerActivation } from '../components/TransformerActivation';
-import { TypingEffect } from '../components/TypingEffect';
+import { LLMPipeline } from '../components/LLMPipeline';
+import type { LLMPhase } from '../components/LLMPipeline';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { Card } from '../components/Card';
 import { Badge } from '../components/Badge';
 import { projects } from '../data/projects';
 
 export function Landing() {
-  const [showContent, setShowContent] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowContent(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
+  const [showLinks, setShowLinks] = useState(false);
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
+
+  function handlePhase(p: LLMPhase) {
+    setShowLinks(p === 'output' || p === 'idle');
+  }
 
   return (
     <>
       {/* hero */}
-      <section className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden">
-        <TransformerActivation />
-        <ParticleNetwork />
+      <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
+        <LLMPipeline onPhaseChange={handlePhase} />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <h1
-              className={`bg-gradient-to-b from-white to-white/70 bg-clip-text text-4xl font-semibold tracking-tight text-transparent leading-[1.1] transition-all duration-700 sm:text-5xl lg:text-6xl ${
-                showContent ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-              }`}
-            >
-              talon meyer.
-            </h1>
-
-            <div
-              className={`mt-5 h-8 transition-all delay-150 duration-700 ${
-                showContent ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-              }`}
-            >
-              <TypingEffect
-                text="machine learning engineer & full-stack developer."
-                speed={30}
-                delay={800}
-                className="font-mono text-sm text-accent sm:text-base"
-              />
+        {/* Navigation + hero caption – appear after animation */}
+        <div
+          className={`absolute bottom-10 left-8 z-20 max-w-md transition-all duration-700 ${
+            showLinks ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+          }`}
+        >
+          {/* Compact caption for quick readability */}
+          <div className="mb-3">
+            <div className="font-mono text-xs uppercase tracking-[0.22em] text-accent/80">
+              talon meyer
             </div>
+            <p className="mt-1 text-xs text-white/60">
+              machine learning engineer &amp; full-stack developer.
+            </p>
+          </div>
 
-            <div
-              className={`mt-8 flex flex-wrap items-center gap-5 transition-all delay-300 duration-700 ${
-                showContent ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-              }`}
+          <div className="flex flex-wrap items-center gap-5">
+            <Link
+              to="/projects"
+              className="group relative font-mono text-sm font-medium text-white pointer-events-auto"
             >
-              <Link
-                to="/projects"
-                className="group relative font-mono text-sm font-medium text-white"
-              >
-                view work
-                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-              </Link>
-              <Link
-                to="/contact"
-                className="group relative font-mono text-sm font-medium text-white"
-              >
-                contact
-                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-              </Link>
+              view work
+              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              to="/contact"
+              className="group relative font-mono text-sm font-medium text-white pointer-events-auto"
+            >
+              contact
+              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+            </Link>
 
-              <span className="h-4 w-px bg-white/20" aria-hidden="true" />
+            <span className="h-4 w-px bg-white/20" aria-hidden="true" />
 
-              <a
-                href="https://github.com/MeyerTalon"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/40 transition-all duration-200 hover:text-accent"
-                aria-label="GitHub"
-              >
-                <GitHubIcon size={20} />
-              </a>
-              <a
-                href="https://linkedin.com/in/talon-meyer"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/40 transition-all duration-200 hover:text-accent"
-                aria-label="LinkedIn"
-              >
-                <LinkedInIcon size={20} />
-              </a>
-            </div>
+            <a
+              href="https://github.com/MeyerTalon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 transition-all duration-200 hover:text-accent pointer-events-auto"
+              aria-label="GitHub"
+            >
+              <GitHubIcon size={20} />
+            </a>
+            <a
+              href="https://linkedin.com/in/talon-meyer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 transition-all duration-200 hover:text-accent pointer-events-auto"
+              aria-label="LinkedIn"
+            >
+              <LinkedInIcon size={20} />
+            </a>
           </div>
         </div>
       </section>
@@ -115,7 +99,11 @@ export function Landing() {
                   </p>
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {project.techStack.slice(0, 4).map((tech) => (
-                      <Badge key={tech} variant="outline" className="border-white/10 text-white/60">
+                      <Badge
+                        key={tech}
+                        variant="outline"
+                        className="border-white/10 text-white/60"
+                      >
                         {tech}
                       </Badge>
                     ))}
