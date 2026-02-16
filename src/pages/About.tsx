@@ -96,6 +96,12 @@ export function About() {
               partnering with companies like google and netflix to run technical
               projects and events.
             </p>
+            <p className="mt-4 text-lg leading-relaxed text-white/60">
+              outside of work and academia, i love surfing, snowboarding, learning spanish,
+              and am an avid consumers of stories (both literary and cinematic). originally
+              from san diego (socal {'>>>'} norcal), i now live in the bay area. btw free tay-k
+              (he ain't even do nothin).
+            </p>
           </div>
         </ScrollReveal>
       </section>

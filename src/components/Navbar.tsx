@@ -11,7 +11,7 @@ const navItems: NavItem[] = [
   { label: 'contact', path: '/contact' },
 ];
 
-const RESUME_URL = 'https://drive.google.com/file/d/1cIemBIl14PZ6sij48F_n58-omNZ3zbcz/view?usp=sharing';
+const RESUME_URL = '/resume.pdf';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
