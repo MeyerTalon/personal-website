@@ -17,12 +17,12 @@ export interface Skill {
 }
 
 export type SkillCategory =
+  | 'ML / AI'
+  | 'DevOps'
+  | 'Languages'
   | 'Frontend'
   | 'Backend'
-  | 'DevOps'
-  | 'Tools'
-  | 'Languages'
-  | 'Databases';
+  | 'Infrastructure';
 
 export interface Experience {
   id: string;

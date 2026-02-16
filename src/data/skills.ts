@@ -1,56 +1,50 @@
 import type { Skill } from '../types';
 
 export const skills: Skill[] = [
+  // ML / AI
+  { name: 'PyTorch', category: 'ML / AI' },
+  { name: 'LangChain', category: 'ML / AI' },
+  { name: 'HuggingFace', category: 'ML / AI' },
+  { name: 'Databricks', category: 'ML / AI' },
+  { name: 'YOLOv8', category: 'ML / AI' },
+  { name: 'Computer Vision', category: 'ML / AI' },
+  { name: 'LLMs / NLP', category: 'ML / AI' },
+
   // Languages
-  { name: 'TypeScript', category: 'Languages' },
-  { name: 'JavaScript', category: 'Languages' },
   { name: 'Python', category: 'Languages' },
-  { name: 'Go', category: 'Languages' },
+  { name: 'JavaScript / TypeScript', category: 'Languages' },
+  { name: 'Java', category: 'Languages' },
+  { name: 'C / C++', category: 'Languages' },
+  { name: 'Rust', category: 'Languages' },
   { name: 'SQL', category: 'Languages' },
-  { name: 'HTML/CSS', category: 'Languages' },
+  { name: 'Dart', category: 'Languages' },
 
   // Frontend
   { name: 'React', category: 'Frontend' },
   { name: 'Next.js', category: 'Frontend' },
+  { name: 'Flutter', category: 'Frontend' },
   { name: 'Tailwind CSS', category: 'Frontend' },
-  { name: 'Redux', category: 'Frontend' },
-  { name: 'Vue.js', category: 'Frontend' },
-  { name: 'React Native', category: 'Frontend' },
 
   // Backend
-  { name: 'Node.js', category: 'Backend' },
-  { name: 'Express', category: 'Backend' },
   { name: 'FastAPI', category: 'Backend' },
-  { name: 'GraphQL', category: 'Backend' },
+  { name: 'SQLAlchemy', category: 'Backend' },
+  { name: 'Pydantic', category: 'Backend' },
   { name: 'REST APIs', category: 'Backend' },
-  { name: 'WebSocket', category: 'Backend' },
+  { name: 'RabbitMQ', category: 'Backend' },
+  { name: 'Keycloak', category: 'Backend' },
 
-  // Databases
-  { name: 'PostgreSQL', category: 'Databases' },
-  { name: 'MongoDB', category: 'Databases' },
-  { name: 'Redis', category: 'Databases' },
-  { name: 'Prisma', category: 'Databases' },
-
-  // DevOps
-  { name: 'Docker', category: 'DevOps' },
-  { name: 'AWS', category: 'DevOps' },
-  { name: 'GitHub Actions', category: 'DevOps' },
-  { name: 'Vercel', category: 'DevOps' },
-  { name: 'Linux', category: 'DevOps' },
-
-  // Tools
-  { name: 'Git', category: 'Tools' },
-  { name: 'VS Code', category: 'Tools' },
-  { name: 'Figma', category: 'Tools' },
-  { name: 'Jira', category: 'Tools' },
-  { name: 'Postman', category: 'Tools' },
+  // Infrastructure
+  { name: 'AWS', category: 'Infrastructure' },
+  { name: 'Docker', category: 'Infrastructure' },
+  { name: 'PostgreSQL', category: 'Infrastructure' },
+  { name: 'Git', category: 'Infrastructure' },
+  { name: 'Vercel', category: 'Infrastructure' },
 ];
 
 export const skillCategories = [
+  'ML / AI',
   'Languages',
   'Frontend',
   'Backend',
-  'Databases',
-  'DevOps',
-  'Tools',
+  'Infrastructure',
 ] as const;
