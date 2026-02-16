@@ -1,55 +1,110 @@
-import { Briefcase, GraduationCap } from 'lucide-react';
+import { Briefcase, GraduationCap, FlaskConical, Users } from 'lucide-react';
 import { SectionHeading } from '../components/SectionHeading';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
 import { skills, skillCategories } from '../data/skills';
-import { experiences, education } from '../data/experience';
+import { experiences, research, leadership, education } from '../data/experience';
+import type { Experience } from '../types';
+
+function Timeline({
+  items,
+  icon: Icon,
+}: {
+  items: Experience[];
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+}) {
+  return (
+    <div className="mx-auto max-w-3xl">
+      <div className="relative space-y-8 before:absolute before:left-[17px] before:top-2 before:h-[calc(100%-16px)] before:w-px before:bg-white/20 sm:before:left-[21px]">
+        {items.map((item, index) => (
+          <ScrollReveal key={item.id} delay={index * 150}>
+            <div className="relative pl-12 sm:pl-14">
+              <div className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black sm:h-11 sm:w-11">
+                <Icon size={16} className="text-white/70" />
+              </div>
+
+              <Card hover={false}>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <h3 className="text-lg font-medium text-white">
+                      {item.role}
+                    </h3>
+                    <p className="text-sm font-medium text-white/60">
+                      {item.company}
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/60">
+                    {item.startDate} — {item.endDate}
+                  </span>
+                </div>
+
+                <ul className="mt-4 space-y-2">
+                  {item.description.map((line, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 text-sm text-white/60"
+                    >
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-white/40" />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+
+                {item.techStack && (
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {item.techStack.map((tech) => (
+                      <Badge key={tech} variant="outline" className="border-white/20 text-white/70">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function About() {
   return (
     <div className="py-16">
-      {/* Bio Section */}
+      {/* bio */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <SectionHeading
-            title="About Me"
-            subtitle="Get to know more about who I am and what drives me"
+            title="about me."
           />
         </ScrollReveal>
 
         <ScrollReveal>
           <div className="mx-auto max-w-3xl">
-            <div className="prose prose-lg dark:prose-invert mx-auto">
-              <p className="text-lg leading-relaxed text-surface-600 dark:text-surface-300">
-                I'm a passionate full-stack developer with over 5 years of experience building
-                modern web applications. My journey in software development started during
-                university, where I discovered the power of turning ideas into functional,
-                beautiful digital products.
-              </p>
-              <p className="mt-4 text-lg leading-relaxed text-surface-600 dark:text-surface-300">
-                I specialize in building performant, accessible, and visually compelling web
-                applications using React, TypeScript, and Node.js. I'm a firm believer in clean
-                code, thoughtful architecture, and continuous learning.
-              </p>
-              <p className="mt-4 text-lg leading-relaxed text-surface-600 dark:text-surface-300">
-                When I'm not coding, you'll find me exploring new technologies, contributing to
-                open-source projects, or enjoying the outdoors. I'm always open to new
-                opportunities and collaborations.
-              </p>
-            </div>
+            <p className="text-lg leading-relaxed text-white/60">
+              i'm a machine learning engineer and full-stack developer studying
+              electrical engineering and computer science at uc berkeley. my work
+              spans building production ml pipelines, training computer vision
+              models, and shipping full-stack applications — from llm-powered
+              automation at rippling to real-time methane detection research at
+              berkeley's b.e.s.t. lab.
+            </p>
+            <p className="mt-4 text-lg leading-relaxed text-white/60">
+              as president of generative ai at berkeley, i lead the largest
+              student organization in the u.s. focused on generative ai,
+              partnering with companies like google and netflix to run technical
+              projects and events.
+            </p>
           </div>
         </ScrollReveal>
       </section>
 
-      {/* Skills Section */}
-      <section className="mt-20 bg-surface-50 py-20 dark:bg-surface-800/50">
+      {/* skills */}
+      <section className="mt-20 border-t border-white/10 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <SectionHeading
-              title="Skills & Technologies"
-              subtitle="The tools and technologies I work with"
-            />
+            <SectionHeading title="skills & technologies." />
           </ScrollReveal>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -58,12 +113,12 @@ export function About() {
               return (
                 <ScrollReveal key={category} delay={catIndex * 100}>
                   <Card hover={false} className="h-full">
-                    <h3 className="mb-4 text-lg font-semibold text-surface-900 dark:text-white">
+                    <h3 className="mb-4 text-lg font-medium text-white">
                       {category}
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {categorySkills.map((skill) => (
-                        <Badge key={skill.name} variant="primary">
+                        <Badge key={skill.name} variant="outline" className="border-white/20 text-white/70">
                           {skill.name}
                         </Badge>
                       ))}
@@ -76,104 +131,67 @@ export function About() {
         </div>
       </section>
 
-      {/* Experience Timeline */}
+      {/* experience */}
       <section className="mt-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <SectionHeading
-              title="Experience"
-              subtitle="My professional journey so far"
-            />
+            <SectionHeading title="experience." />
           </ScrollReveal>
-
-          <div className="mx-auto max-w-3xl">
-            <div className="relative space-y-8 before:absolute before:left-[17px] before:top-2 before:h-[calc(100%-16px)] before:w-0.5 before:bg-surface-200 dark:before:bg-surface-700 sm:before:left-[21px]">
-              {experiences.map((exp, index) => (
-                <ScrollReveal key={exp.id} delay={index * 150}>
-                  <div className="relative pl-12 sm:pl-14">
-                    {/* Timeline dot */}
-                    <div className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full border-2 border-primary-500 bg-white dark:bg-surface-900 sm:h-11 sm:w-11">
-                      <Briefcase size={16} className="text-primary-600 dark:text-primary-400" />
-                    </div>
-
-                    <Card hover={false}>
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <div>
-                          <h3 className="text-lg font-semibold text-surface-900 dark:text-white">
-                            {exp.role}
-                          </h3>
-                          <p className="text-sm font-medium text-primary-600 dark:text-primary-400">
-                            {exp.company}
-                          </p>
-                        </div>
-                        <span className="rounded-full bg-surface-100 px-3 py-1 text-xs font-medium text-surface-600 dark:bg-surface-700 dark:text-surface-300">
-                          {exp.startDate} — {exp.endDate}
-                        </span>
-                      </div>
-
-                      <ul className="mt-4 space-y-2">
-                        {exp.description.map((item, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-sm text-surface-600 dark:text-surface-300"
-                          >
-                            <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary-500" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-
-                      {exp.techStack && (
-                        <div className="mt-4 flex flex-wrap gap-1.5">
-                          {exp.techStack.map((tech) => (
-                            <Badge key={tech}>{tech}</Badge>
-                          ))}
-                        </div>
-                      )}
-                    </Card>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
+          <Timeline items={experiences} icon={Briefcase} />
         </div>
       </section>
 
-      {/* Education */}
+      {/* research */}
+      <section className="mt-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <SectionHeading title="research." />
+          </ScrollReveal>
+          <Timeline items={research} icon={FlaskConical} />
+        </div>
+      </section>
+
+      {/* leadership */}
+      <section className="mt-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <SectionHeading title="leadership." />
+          </ScrollReveal>
+          <Timeline items={leadership} icon={Users} />
+        </div>
+      </section>
+
+      {/* education */}
       <section className="mt-20 pb-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <SectionHeading
-              title="Education"
-              subtitle="My academic background"
-            />
+            <SectionHeading title="education." />
           </ScrollReveal>
 
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl space-y-6">
             {education.map((edu, index) => (
               <ScrollReveal key={edu.id} delay={index * 150}>
                 <div className="relative pl-12 sm:pl-14">
-                  {/* Timeline dot */}
-                  <div className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full border-2 border-primary-500 bg-white dark:bg-surface-900 sm:h-11 sm:w-11">
-                    <GraduationCap size={16} className="text-primary-600 dark:text-primary-400" />
+                  <div className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black sm:h-11 sm:w-11">
+                    <GraduationCap size={16} className="text-white/70" />
                   </div>
 
                   <Card hover={false}>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
-                        <h3 className="text-lg font-semibold text-surface-900 dark:text-white">
+                        <h3 className="text-lg font-medium text-white">
                           {edu.degree} in {edu.field}
                         </h3>
-                        <p className="text-sm font-medium text-primary-600 dark:text-primary-400">
+                        <p className="text-sm font-medium text-white/60">
                           {edu.institution}
                         </p>
                       </div>
-                      <span className="rounded-full bg-surface-100 px-3 py-1 text-xs font-medium text-surface-600 dark:bg-surface-700 dark:text-surface-300">
+                      <span className="rounded-full border border-white/20 px-3 py-1 text-xs font-medium text-white/60">
                         {edu.startDate} — {edu.endDate}
                       </span>
                     </div>
                     {edu.description && (
-                      <p className="mt-3 text-sm text-surface-600 dark:text-surface-300">
+                      <p className="mt-3 text-sm text-white/60">
                         {edu.description}
                       </p>
                     )}
