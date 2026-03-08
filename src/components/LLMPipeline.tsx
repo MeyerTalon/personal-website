@@ -224,7 +224,7 @@ export function LLMPipeline({ onPhaseChange, className }: LLMPipelineProps) {
 
     /* ── Stage-specific canvas drawing ── */
 
-    function drawEmbed(cx: number, y0: number, y1: number, B: number, elapsed: number) {
+    function drawEmbed(cx: number, _y0: number, _y1: number, B: number, elapsed: number) {
       // Show each token row as an embedding vector (bar chart lookup)
       for (let t = 0; t < N_TOK; t++) {
         const py = ty(t);
