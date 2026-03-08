@@ -34,7 +34,7 @@ export function Landing() {
               talon meyer
             </div>
             <p className="mt-1 text-xs text-white/60">
-              machine learning engineer &amp; full-stack developer.
+              machine learning engineer &amp; researcher.
             </p>
           </div>
 
@@ -136,7 +136,7 @@ export function Landing() {
                 about.
               </h2>
               <p className="mt-5 text-white/50 leading-relaxed">
-                machine learning engineer and full-stack developer building
+                machine learning engineer and researcher building
                 intelligent, production-grade systems — from llm pipelines to
                 real-time computer vision.
               </p>
