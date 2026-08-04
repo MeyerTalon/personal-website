@@ -1,11 +1,13 @@
 ---
 name: working-with-typescript-react
 description: >-
-  TypeScript and React coding standards for this project. Use whenever writing,
-  editing, reviewing, or refactoring .ts/.tsx files, React components, hooks,
-  props/types, effects, state, or Vite React code.
+  TypeScript and React coding standards for this project, including matching
+  the site's existing visual style. Use whenever writing, editing, reviewing,
+  or refactoring .ts/.tsx files, React components, hooks, props/types, effects,
+  state, Vite React code, or UI/styling on pages.
 paths:
   - "**/*.{ts,tsx}"
+  - "**/*.css"
 ---
 
 # Working with TypeScript + React
@@ -61,13 +63,50 @@ matching existing project patterns over inventing new ones.
 - Interactive elements must be keyboard-accessible and have accessible names.
 - Prefer semantic HTML (`button`, `a`, `label`) over clickable `div`s.
 
-## Styling and project layout
+## Visual style (match the current page)
 
-- Follow existing Tailwind utility patterns and shared components
-  (`Button`, `Card`, `SectionHeading`, `ScrollReveal`, `cn`).
+Before writing or changing UI, open nearby pages/components and **match their
+look, copy tone, spacing, and Tailwind patterns**. Do not introduce a new
+visual system. Prefer extending what already exists on that page.
+
+### Site language
+
+- Dark shell: page background `#0a0a0a`, white text, teal accent via
+  `text-accent` / `border-accent` / `bg-accent` (`--color-accent: #36b5a0` in
+  `src/index.css`). Prefer theme tokens over hard-coded hex unless the
+  surrounding code already uses a local palette (e.g. letter envelopes).
+- Typography: `font-mono` (JetBrains Mono) for labels, nav, CTAs, and small
+  meta; body/headings otherwise follow Inter via the global sans stack.
+- Copy: lowercase, concise, often with a trailing period (`blog.`,
+  `page not found.`). Keep that voice unless the page already differs.
+- Opacity hierarchy for secondary text: `text-white/60`, `/50`, `/40`.
+  Borders/dividers: `border-white/10`–`/30`, not heavy cards by default.
+
+### Layout and components
+
+- Page width: `mx-auto max-w-6xl px-4 sm:px-6 lg:px-8`, often with `py-16`.
+- Page titles: `SectionHeading` (`title` + optional `subtitle`).
+- Entrance motion: wrap blocks in `ScrollReveal` when siblings on the page do.
+- Reuse `Button`, `Card`, `Badge`, `cn` instead of one-off primitives.
+- Links/CTAs: accent mono text with underline or color hover
+  (`hover:text-accent/80`), matching Navbar/Footer/NotFound patterns.
+- Motion: subtle transitions (`duration-200`–`300`); avoid new glow stacks,
+  pill clusters, or dashboard-style chrome unless the page already has them.
+
+### Page-local exceptions
+
+- Some routes have a distinct composition (e.g. Landing hero canvas,
+  PrishaLetters envelopes). When editing those, match **that page's** local
+  style and keep the global shell (Navbar/Footer/Layout) unchanged.
+- New public pages should follow the main portfolio look (About/Blog/Projects/
+  Contact/NotFound), not a special-case page, unless the user asks otherwise.
+
+## Project layout
+
 - Put route pages in `src/pages/`, reusable UI in `src/components/`, static
   content in `src/data/`, shared types in `src/types/`.
 - Wire new routes through `src/App.tsx` with React Router.
+- Theme tokens and global CSS live in `src/index.css`.
 
 ## Quality bar before finishing
 

@@ -84,12 +84,13 @@ export function About() {
           <div className="mx-auto max-w-3xl">
             <p className="text-lg leading-relaxed text-white/60">
               i'm a machine learning engineer and researcher studying
-              electrical engineering and computer science at uc berkeley. my work
-              spans building production ml pipelines, training computer vision
-              models, and shipping full-stack applications. from llm-powered
-              automation at rippling to real-time methane detection research at
-              berkeley's b.e.s.t. lab, my work is all about building intelligent, 
-              production-grade systems.
+              electrical engineering and computer science at uc berkeley. i
+              currently work at adaptive security, a cybersecurity company, and
+              my broader work spans building production ml pipelines, training
+              computer vision models, and shipping full-stack applications. from
+              llm-powered automation at rippling to real-time methane detection
+              research at berkeley's b.e.s.t. lab, i care about building
+              intelligent, production-grade systems.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-white/60">
               as president of generative ai at berkeley, i lead the largest
