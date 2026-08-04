@@ -8,6 +8,7 @@ import { BlogPost } from './pages/BlogPost';
 import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
 import { PrishaLetters } from './pages/PrishaLetters';
+import { NotFound } from './pages/NotFound';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/prisha-letters" element={<PrishaLetters />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>
