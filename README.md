@@ -35,7 +35,7 @@ A modern, responsive developer portfolio built with React, TypeScript, and Tailw
 ### Prerequisites
 
 - Node.js 18+ (recommended: 20+)
-- npm 9+
+- pnpm 11+
 
 ### Installation
 
@@ -45,10 +45,10 @@ git clone https://github.com/yourusername/personal-website.git
 cd personal-website
 
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm dev
 ```
 
 The app will be available at `http://localhost:5173`.
@@ -57,10 +57,10 @@ The app will be available at `http://localhost:5173`.
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint |
+| `pnpm dev` | Start development server |
+| `pnpm build` | Type-check and build for production |
+| `pnpm preview` | Preview production build locally |
+| `pnpm lint` | Run ESLint |
 
 ## Project Structure
 
@@ -120,16 +120,12 @@ The color scheme is defined in `src/index.css` using Tailwind's `@theme` directi
 
 1. Push your code to GitHub.
 2. Import the repository on [Vercel](https://vercel.com).
-3. Vercel will auto-detect Vite and configure the build settings.
-4. For CI/CD via GitHub Actions, add these secrets to your repository:
-   - `VERCEL_TOKEN` — Your Vercel API token
-   - `VERCEL_ORG_ID` — Your Vercel organization ID
-   - `VERCEL_PROJECT_ID` — Your Vercel project ID
+3. Vercel auto-detects Vite and deploys on every push to the production branch, plus preview deployments for PRs/branches.
 
 ### Manual Deploy
 
 ```bash
-npm run build
+pnpm build
 # Upload the `dist/` folder to any static hosting provider
 ```
 

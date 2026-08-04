@@ -2,6 +2,15 @@ import type { Project } from '../types/index';
 
 export const projects: Project[] = [
   {
+    id: 'mymodels',
+    title: 'mymodels',
+    description:
+      'personal pytorch models from scratch. currently a gpt-style decoder-only transformer trained on wikipedia for sentence completion, with bpe tokenization, training, and inference pipelines.',
+    techStack: ['Python', 'PyTorch', 'Hugging Face', 'tokenizers', 'uv'],
+    githubUrl: 'https://github.com/MeyerTalon/mymodels',
+    featured: true,
+  },
+  {
     id: 'catan-bot',
     title: 'catan-bot',
     description:
