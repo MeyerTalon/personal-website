@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from './context/ThemeProvider';
 import { Layout } from './components/Layout';
 import { Landing } from './pages/Landing';
@@ -8,6 +9,7 @@ import { BlogPost } from './pages/BlogPost';
 import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
 import { PrishaLetters } from './pages/PrishaLetters';
+import { Visits } from './pages/Visits';
 import { NotFound } from './pages/NotFound';
 
 export default function App() {
@@ -23,9 +25,11 @@ export default function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/letters-to-prisha" element={<PrishaLetters />} />
+            <Route path="/visits" element={<Visits />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        <Analytics />
       </BrowserRouter>
     </ThemeProvider>
   );
