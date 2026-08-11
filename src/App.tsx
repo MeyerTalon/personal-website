@@ -22,7 +22,7 @@ export default function App() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/prisha-letters" element={<PrishaLetters />} />
+            <Route path="/letters-to-prisha" element={<PrishaLetters />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
