@@ -68,7 +68,9 @@ export interface Project {
     title: string;
     date: string;
     /** Plain text body. Use blank lines for paragraphs. */
-    content: string;
+    content?: string;
+    /** Optional scanned/handwritten letter image (imported asset URL). */
+    image?: string;
   }
   
   export type Theme = 'light' | 'dark';

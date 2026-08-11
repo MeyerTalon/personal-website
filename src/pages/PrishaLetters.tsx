@@ -114,7 +114,7 @@ function LetterModal({
     };
   }, [onClose]);
 
-  const paragraphs = letter.content.split(/\n\n+/).filter(Boolean);
+  const paragraphs = letter.content?.split(/\n\n+/).filter(Boolean) ?? [];
 
   return (
     <div
@@ -172,16 +172,27 @@ function LetterModal({
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-10 sm:py-8">
-          <div className="space-y-4">
-            {paragraphs.map((p, i) => (
-              <p
-                key={i}
-                className="whitespace-pre-wrap text-[15px] leading-relaxed text-[#3a342c]"
-              >
-                {p}
-              </p>
-            ))}
-          </div>
+          {letter.image && (
+            <img
+              src={letter.image}
+              alt={letter.title}
+              className="mx-auto w-full max-w-md rounded-sm border border-[#c4b9a8]/40
+                shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
+            />
+          )}
+
+          {paragraphs.length > 0 && (
+            <div className={`space-y-4 ${letter.image ? 'mt-6' : ''}`}>
+              {paragraphs.map((p, i) => (
+                <p
+                  key={i}
+                  className="whitespace-pre-wrap text-[15px] leading-relaxed text-[#3a342c]"
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+          )}
 
           <p className="mt-8 pb-[max(0.5rem,env(safe-area-inset-bottom))] font-mono text-xs text-[#6b6256]">
             — talon
