@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { SectionHeading } from '../components/SectionHeading';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { Card } from '../components/Card';
+import { cn } from '../utils/cn';
 
 type Visit = {
   id: string;
@@ -24,13 +26,37 @@ type VisitsResponse = {
   visits: Visit[];
 };
 
+type DayGroup = {
+  key: string;
+  label: string;
+  visits: Visit[];
+};
+
+function dayKey(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return 'unknown';
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function formatDayLabel(key: string): string {
+  if (key === 'unknown') return 'unknown date';
+  const [year, month, day] = key.split('-').map(Number);
+  const d = new Date(year, month - 1, day);
+  return d.toLocaleDateString('en-US', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
 function formatTime(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  return d.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     second: '2-digit',
@@ -44,6 +70,27 @@ function formatLocation(visit: Visit): string {
   return parts.join(', ');
 }
 
+function groupByDay(visits: Visit[]): DayGroup[] {
+  const map = new Map<string, Visit[]>();
+
+  for (const visit of visits) {
+    const key = dayKey(visit.timestamp);
+    const list = map.get(key);
+    if (list) list.push(visit);
+    else map.set(key, [visit]);
+  }
+
+  return [...map.entries()]
+    .sort(([a], [b]) => b.localeCompare(a))
+    .map(([key, dayVisits]) => ({
+      key,
+      label: formatDayLabel(key),
+      visits: dayVisits.sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      ),
+    }));
+}
+
 function MetaRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
@@ -55,10 +102,86 @@ function MetaRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+function VisitDetail({ visit }: { visit: Visit }) {
+  return (
+    <div className="rounded border border-white/10 bg-white/[0.02] p-4">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-white/10 pb-3">
+        <p className="font-mono text-sm text-white">{formatLocation(visit)}</p>
+        <time dateTime={visit.timestamp} className="font-mono text-[10px] text-white/40 sm:text-xs">
+          {formatTime(visit.timestamp)}
+        </time>
+      </div>
+      <dl className="space-y-2.5">
+        <MetaRow label="ip" value={visit.ip} />
+        <MetaRow label="path" value={visit.path ?? '—'} />
+        <MetaRow label="referrer" value={visit.referrer || 'direct'} />
+        <MetaRow label="language" value={visit.language ?? '—'} />
+        <MetaRow label="screen" value={visit.screen ?? '—'} />
+        {(visit.latitude || visit.longitude) && (
+          <MetaRow
+            label="coords"
+            value={`${visit.latitude ?? '?'}, ${visit.longitude ?? '?'}`}
+          />
+        )}
+        <MetaRow label="ua" value={visit.userAgent ?? '—'} />
+      </dl>
+    </div>
+  );
+}
+
+function DayRow({
+  group,
+  open,
+  onToggle,
+}: {
+  group: DayGroup;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const countLabel = group.visits.length === 1 ? '1 visit' : `${group.visits.length} visits`;
+
+  return (
+    <Card hover={false} className="overflow-hidden p-0">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left
+          transition-colors hover:bg-white/[0.03] sm:px-5 touch-manipulation"
+      >
+        <div className="min-w-0">
+          <p className="font-mono text-sm text-white sm:text-base">{group.label}</p>
+          <p className="mt-1 font-mono text-[10px] tracking-widest text-white/40">{countLabel}</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-3">
+          <span className="font-mono text-lg text-accent">{group.visits.length}</span>
+          <ChevronDown
+            size={18}
+            className={cn(
+              'text-white/40 transition-transform duration-200',
+              open && 'rotate-180 text-accent'
+            )}
+            aria-hidden="true"
+          />
+        </div>
+      </button>
+
+      {open && (
+        <div className="space-y-3 border-t border-white/10 px-4 py-4 sm:px-5">
+          {group.visits.map((visit) => (
+            <VisitDetail key={visit.id} visit={visit} />
+          ))}
+        </div>
+      )}
+    </Card>
+  );
+}
+
 export function Visits() {
   const [data, setData] = useState<VisitsResponse | null>(null);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [error, setError] = useState('');
+  const [openDay, setOpenDay] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -83,11 +206,14 @@ export function Visits() {
         }
 
         if (!cancelled) {
+          const visits = Array.isArray(json.visits) ? json.visits : [];
           setData({
             total: json.total ?? 0,
-            visits: Array.isArray(json.visits) ? json.visits : [],
+            visits,
           });
           setStatus('ready');
+          const groups = groupByDay(visits);
+          setOpenDay(groups[0]?.key ?? null);
         }
       } catch {
         if (!cancelled) {
@@ -103,13 +229,15 @@ export function Visits() {
     };
   }, []);
 
+  const days = data ? groupByDay(data.visits) : [];
+
   return (
     <div className="py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <SectionHeading
             title="visits."
-            subtitle="site traffic log. one entry per browser session."
+            subtitle="site traffic by day. click a day to expand sessions."
           />
         </ScrollReveal>
 
@@ -132,44 +260,24 @@ export function Visits() {
                   total visits
                 </p>
                 <p className="mt-1 font-mono text-[10px] text-white/30">
-                  showing {data.visits.length} most recent
+                  {days.length} day{days.length === 1 ? '' : 's'} · {data.visits.length} recent
                 </p>
               </div>
             </ScrollReveal>
 
-            {data.visits.length === 0 ? (
+            {days.length === 0 ? (
               <p className="py-12 text-center text-white/50">no visits recorded yet.</p>
             ) : (
-              <div className="space-y-4">
-                {data.visits.map((visit, index) => (
-                  <ScrollReveal key={visit.id} delay={Math.min(index, 8) * 40}>
-                    <Card hover={false} className="p-4 sm:p-5">
-                      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-white/10 pb-3">
-                        <p className="font-mono text-sm text-white">
-                          {formatLocation(visit)}
-                        </p>
-                        <time
-                          dateTime={visit.timestamp}
-                          className="font-mono text-[10px] text-white/40 sm:text-xs"
-                        >
-                          {formatTime(visit.timestamp)}
-                        </time>
-                      </div>
-                      <dl className="space-y-2.5">
-                        <MetaRow label="ip" value={visit.ip} />
-                        <MetaRow label="path" value={visit.path ?? '—'} />
-                        <MetaRow label="referrer" value={visit.referrer || 'direct'} />
-                        <MetaRow label="language" value={visit.language ?? '—'} />
-                        <MetaRow label="screen" value={visit.screen ?? '—'} />
-                        {(visit.latitude || visit.longitude) && (
-                          <MetaRow
-                            label="coords"
-                            value={`${visit.latitude ?? '?'}, ${visit.longitude ?? '?'}`}
-                          />
-                        )}
-                        <MetaRow label="ua" value={visit.userAgent ?? '—'} />
-                      </dl>
-                    </Card>
+              <div className="space-y-3">
+                {days.map((group, index) => (
+                  <ScrollReveal key={group.key} delay={Math.min(index, 8) * 40}>
+                    <DayRow
+                      group={group}
+                      open={openDay === group.key}
+                      onToggle={() =>
+                        setOpenDay((current) => (current === group.key ? null : group.key))
+                      }
+                    />
                   </ScrollReveal>
                 ))}
               </div>
