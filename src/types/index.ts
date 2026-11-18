@@ -62,15 +62,5 @@ export interface Project {
     date: string;
     excerpt: string;
   }
-
-  export interface Letter {
-    id: string;
-    title: string;
-    date: string;
-    /** Plain text body. Use blank lines for paragraphs. */
-    content?: string;
-    /** Optional scanned/handwritten letter image (imported asset URL). */
-    image?: string;
-  }
   
   export type Theme = 'light' | 'dark';

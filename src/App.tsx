@@ -8,7 +8,6 @@ import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
 import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
-import { PrishaLetters } from './pages/PrishaLetters';
 import { Visits } from './pages/Visits';
 import { NotFound } from './pages/NotFound';
 
@@ -24,7 +23,6 @@ export default function App() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/letters-to-prisha" element={<PrishaLetters />} />
             <Route path="/visits" element={<Visits />} />
             <Route path="*" element={<NotFound />} />
           </Route>

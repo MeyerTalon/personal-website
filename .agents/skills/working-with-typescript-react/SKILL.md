@@ -95,8 +95,8 @@ visual system. Prefer extending what already exists on that page.
 
 ### Page-local exceptions
 
-- Some routes have a distinct composition (e.g. Landing hero canvas,
-  PrishaLetters envelopes). When editing those, match **that page's** local
+- Some routes have a distinct composition (e.g. Landing hero canvas).
+  When editing those, match **that page's** local
   style and keep the global shell (Navbar/Footer/Layout) unchanged.
 - New public pages should follow the main portfolio look (About/Blog/Projects/
   Contact/NotFound), not a special-case page, unless the user asks otherwise.
