@@ -83,7 +83,7 @@ export function About() {
         <ScrollReveal>
           <div className="mx-auto max-w-3xl">
             <p className="text-lg leading-relaxed text-white/60">
-              i'm a machine learning engineer and researcher studying
+              i'm a machine learning and software engineer studying
               electrical engineering and computer science at uc berkeley. i
               currently work at adaptive security, a cybersecurity company, and
               my broader work spans building production ml pipelines, training
