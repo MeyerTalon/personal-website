@@ -41,9 +41,9 @@ const OUTPUT_TOKENS: string[] = [
   '<BOS>',
   'machine',
   'learning',
-  'engineer',
   'and',
-  'researcher',
+  'software',
+  'engineer',
   '.',
   '<EOS>',
 ];
